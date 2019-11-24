@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.camunda.tutorials.camunda_error_handling.ProcessUnitTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.643 sec

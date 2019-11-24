@@ -1,0 +1,148 @@
+<form enctype="multipart/form-data" id="uploadForm" class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="control-label col-md-4" for="file">Upload your Invoice Document</label>
+    	<div class="col-md-8">
+    		<p ng-if="uploadedDocuments"><strong>Recently uploaded documents</strong><br/>
+    			<ul>
+    				<li ng-repeat="obj in uploadedDocuments">{{obj.name}}</li>
+    			</ul>
+    		</p>
+	    	<input name="file" type="file" class="form-control"/>
+	    	<div class="uploaded-file">
+	    		<input style="display:none" type="text" name="boxfolder" readonly cam-variable-name="boxfolder" cam-variable-type="String"/>
+	    	</div>
+	    	<div class="help-block {{fileUploadHelpBlockClass}}" ng-show="fileUploadHelpBlockShow">This field is required</div>
+	    	<p ng-if="error">{{error}}</p>
+	    	<div class="upload-area" ng-show="showUploadArea">
+	    		<img src="/camunda-invoice-box/assets/img/ajax-loader.gif" ng-show="showProgressIndicator" style="width:30px;margin-top:10px;"/>
+	    		<input ng-show="showUploadBtn" ng-click="uploadFile()" type="button" value="Upload" class="btn btn-primary upload-btn"/>
+	    	</div>
+    	</div>
+    </div>
+
+  	<div class="form-group">
+    	<label class="control-label col-md-4" for="creditor">Creditor</label>
+    	<div class="col-md-8">
+      		<input 
+				cam-variable-name="creditor"
+			    cam-variable-type="String"
+	            id="creditor"
+	            class="form-control"
+	            type="text"
+	            required />
+      		<div class="help">
+        		(e.g. &quot;Great Pizza for Everyone Inc.&quot;)
+      		</div>
+    	</div>
+  	</div>
+
+	<div class="form-group">
+    	<label class="control-label col-md-4" for="amount">Amount</label>
+		<div class="col-md-8">
+			<input cam-variable-name="amount"
+				cam-variable-type="Double"
+				id="amount"
+				name="amount"
+				class="form-control"
+				type="text"
+				required />
+			<span class="help">(e.g. &quot;30.00&quot;)</span>
+			<p ng-show="invoiceForm.amount.$error.camVariableType">Note: Input must be a 'Double'.</p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-md-4" for="amount">Invoice Category</label>
+		<div class="col-md-8">
+			<select cam-variable-name="invoiceCategory"
+				cam-variable-type="String"
+              	class="form-control">
+        		<option>Travel Expenses</option>
+        		<option>Misc</option>
+      		</select>
+		</div>
+	</div>
+
+  	<div class="form-group">
+    	<label class="control-label col-md-4" for="invoiceNumber">Invoice Number</label>
+    	<div class="col-md-8">
+			<input cam-variable-name="invoiceNumber"
+				cam-variable-type="String"
+				id="invoiceNumber"
+				class="form-control"
+				type="text"
+				required />
+      		<span class="help">(e.g. &quot;I-12345&quot;)</span>
+    	</div>
+	</div>
+	
+	<script cam-script type="text/form-script">
+		$scope.showUploadArea = false;
+		$scope.showUploadBtn = true;
+		$scope.showProgressIndicator = false;
+
+		var $form = $('#uploadForm');
+		$('.modal-body #uploadForm input[type="file"]').on('change',function(event) {
+      		var hasFile = event.target.files.length > 0;
+      		if (hasFile) {
+				$scope.showUploadArea = true;
+			} else {
+				$scope.showUploadArea = false;
+			}
+			$scope.$apply();
+		});
+		$scope.uploadFile = function(){
+    		var formData = new FormData($form[0]);
+			$scope.showProgressIndicator = true;
+			$scope.showUploadBtn = false;
+			$scope.fileUploadHelpBlockShow = false;
+			$scope.fileUploadHelpBlockClass = '';
+
+    		$.ajax({
+        		url: '/camunda-invoice-box/rest/rest/upload',  //Server script to process data
+        		type: 'POST',
+				success: function(data) {
+					if (data != null) {
+						var response = JSON.parse(data);
+						var filename = response.filename;
+						$('input[name="boxfolder"]').val(response.uniqueID);
+						$scope.showProgressIndicator = false;
+						$scope.showUploadBtn = true;
+						
+						if (response.success) {
+							if ($scope.uploadedDocuments != null) {
+								$scope.uploadedDocuments.push({name:filename});
+							} else {
+								var uploadedDocuments = [];
+								uploadedDocuments.push({name:filename});
+								$scope.uploadedDocuments = uploadedDocuments;
+							}
+							if ($scope.error) {
+								delete $scope.error;
+							}
+						} else {
+							$scope.error = 'There was an error while uploading the file. Please try again.';
+						}
+						$scope.$apply();
+					}
+				},
+				data: formData,
+        		//Options to tell jQuery not to process data or worry about content-type.
+        		cache: false,
+        		contentType: false,
+        		processData: false
+    		});
+		};
+ 		camForm.on('submit', function(evt) {
+			if ($scope.uploadedDocuments == null || $scope.uploadedDocuments.length<1) {
+				evt.submitPrevented = true;
+				$scope.fileUploadHelpBlockShow = true;
+				$scope.fileUploadHelpBlockClass = 'error';
+			} else {
+				$scope.fileUploadHelpBlockShow = false;
+				$scope.fileUploadHelpBlockClass = '';
+			}
+    	});
+	</script>
+</form>
+
