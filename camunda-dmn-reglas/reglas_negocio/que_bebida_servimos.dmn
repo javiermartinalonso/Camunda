@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_0sxay6s" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
+  <decision id="Decision_bebida" name="Decide sobre la bebida">
+    <extensionElements>
+      <biodi:bounds x="150" y="150" width="180" height="80" />
+      <biodi:edge source="DecideHoraDelDia">
+        <biodi:waypoints x="380" y="303" />
+        <biodi:waypoints x="328" y="230" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredDecision href="#DecideHoraDelDia" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="Destinatario">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>destinatario</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0pzjduo">
+          <text>"Penny","Leonard Hofstadter","Sheldon","Raj"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_0y1vux1" label="Hora del dia">
+        <inputExpression id="LiteralExpression_1dee4cq" typeRef="string">
+          <text>hora</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0xam7za">
+          <text>"mañana","tarde","anochecer","noche"</text>
+        </inputValues>
+      </input>
+      <output id="output_1" label="Bebida" name="Bebida" typeRef="string" />
+      <rule id="DecisionRule_00qrisc">
+        <inputEntry id="UnaryTests_011ln22">
+          <text>"Penny","Leonard Hofstadter"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gfvefu">
+          <text>"anochecer","noche"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0fyxnzv">
+          <text>"Vino tinto"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0rcpgw5">
+        <inputEntry id="UnaryTests_1htychp">
+          <text>"Sheldon"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1et1683">
+          <text>"mañana"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_11ul3bt">
+          <text>"cafe"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0cvsdt5">
+        <inputEntry id="UnaryTests_1giadho">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1wmzoa4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17qr9f0">
+          <text>"cerveza"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="DecideHoraDelDia" name="Decide La hora del dia">
+    <extensionElements>
+      <biodi:bounds x="318" y="303" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="DecisionTable_03891te">
+      <input id="InputClause_1e5wi2l" label="Hora del dia">
+        <inputExpression id="LiteralExpression_0myfokd" typeRef="integer">
+          <text>hora</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1hke6pk" label="Momento del día" name="hora" typeRef="string">
+        <outputValues id="UnaryTests_0qhqsdh">
+          <text>"mañana","tarde","atardecer","noche"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_0hurkb3">
+        <inputEntry id="UnaryTests_1cjtc6n">
+          <text>[6..11]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_10n0vin">
+          <text>"mañana"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dny3ar">
+        <inputEntry id="UnaryTests_0xh6dmq">
+          <text>[12..16]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02ii5c8">
+          <text>"tarde"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hc93mz">
+        <inputEntry id="UnaryTests_0dcbdie">
+          <text>[17..20]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qv7vam">
+          <text>"atardecer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a52edf">
+        <inputEntry id="UnaryTests_0bp5o1y">
+          <text>[21..24], [0..5]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qgq495">
+          <text>"noche"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
