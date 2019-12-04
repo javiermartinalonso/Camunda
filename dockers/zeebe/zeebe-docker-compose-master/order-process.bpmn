@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_05jk6jj" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.7.0">
+  <bpmn:process id="order-process" name="order process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Order Placed">
+      <bpmn:outgoing>SequenceFlow_1m51llw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ServiceTask_1c8szxi" name="Initialite Payment">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="initiate-payment" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1m51llw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1tep7bh</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1m51llw" sourceRef="StartEvent_1" targetRef="ServiceTask_1c8szxi" />
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_149kjd3" name="Payment&#10;Receibed&#10;">
+      <bpmn:incoming>SequenceFlow_1tep7bh</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1qo28gy</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0jk6rvf" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1tep7bh" sourceRef="ServiceTask_1c8szxi" targetRef="IntermediateCatchEvent_149kjd3" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_17vz8k1" name="Order value?" default="SequenceFlow_1w7xf3o">
+      <bpmn:incoming>SequenceFlow_1qo28gy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1w7xf3o</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_122siav</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1qo28gy" sourceRef="IntermediateCatchEvent_149kjd3" targetRef="ExclusiveGateway_17vz8k1" />
+    <bpmn:serviceTask id="ServiceTask_1g9w5ep" name="Ship without Insurance">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="ship-without-insurance" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1w7xf3o</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1xv9uj5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1w7xf3o" sourceRef="ExclusiveGateway_17vz8k1" targetRef="ServiceTask_1g9w5ep" />
+    <bpmn:sequenceFlow id="SequenceFlow_122siav" name="&#62;$100&#10;" sourceRef="ExclusiveGateway_17vz8k1" targetRef="ServiceTask_1i0e4j7">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">orderValue &gt;= 100</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="ServiceTask_1i0e4j7" name="ship With Insurance">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="ship-with-insurance" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_122siav</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0qjcwfd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0sjnbz9">
+      <bpmn:incoming>SequenceFlow_0qjcwfd</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1xv9uj5</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ensl8q</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0qjcwfd" sourceRef="ServiceTask_1i0e4j7" targetRef="ExclusiveGateway_0sjnbz9" />
+    <bpmn:sequenceFlow id="SequenceFlow_1xv9uj5" sourceRef="ServiceTask_1g9w5ep" targetRef="ExclusiveGateway_0sjnbz9" />
+    <bpmn:endEvent id="EndEvent_00gc3p4" name="Order Fullfilled">
+      <bpmn:incoming>SequenceFlow_0ensl8q</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0ensl8q" sourceRef="ExclusiveGateway_0sjnbz9" targetRef="EndEvent_00gc3p4" />
+  </bpmn:process>
+  <bpmn:message id="Message_0jk6rvf" name="payment-received">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="orderId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="109" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="164" y="152" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1c8szxi_di" bpmnElement="ServiceTask_1c8szxi">
+        <dc:Bounds x="270" y="87" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1m51llw_di" bpmnElement="SequenceFlow_1m51llw">
+        <di:waypoint x="215" y="127" />
+        <di:waypoint x="270" y="127" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_149kjd3_di" bpmnElement="IntermediateCatchEvent_149kjd3">
+        <dc:Bounds x="432" y="109" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="427" y="152" width="47" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1tep7bh_di" bpmnElement="SequenceFlow_1tep7bh">
+        <di:waypoint x="370" y="127" />
+        <di:waypoint x="432" y="127" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_17vz8k1_di" bpmnElement="ExclusiveGateway_17vz8k1" isMarkerVisible="true">
+        <dc:Bounds x="535" y="102" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="528" y="78" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1qo28gy_di" bpmnElement="SequenceFlow_1qo28gy">
+        <di:waypoint x="468" y="127" />
+        <di:waypoint x="535" y="127" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1g9w5ep_di" bpmnElement="ServiceTask_1g9w5ep">
+        <dc:Bounds x="660" y="87" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1w7xf3o_di" bpmnElement="SequenceFlow_1w7xf3o">
+        <di:waypoint x="585" y="127" />
+        <di:waypoint x="660" y="127" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="621" y="159" width="4" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_122siav_di" bpmnElement="SequenceFlow_122siav">
+        <di:waypoint x="560" y="152" />
+        <di:waypoint x="560" y="240" />
+        <di:waypoint x="660" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="574" y="220" width="32" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1i0e4j7_di" bpmnElement="ServiceTask_1i0e4j7">
+        <dc:Bounds x="660" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0sjnbz9_di" bpmnElement="ExclusiveGateway_0sjnbz9" isMarkerVisible="true">
+        <dc:Bounds x="835" y="102" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qjcwfd_di" bpmnElement="SequenceFlow_0qjcwfd">
+        <di:waypoint x="760" y="240" />
+        <di:waypoint x="860" y="240" />
+        <di:waypoint x="860" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xv9uj5_di" bpmnElement="SequenceFlow_1xv9uj5">
+        <di:waypoint x="760" y="127" />
+        <di:waypoint x="835" y="127" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_00gc3p4_di" bpmnElement="EndEvent_00gc3p4">
+        <dc:Bounds x="962" y="109" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="946" y="152" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ensl8q_di" bpmnElement="SequenceFlow_0ensl8q">
+        <di:waypoint x="885" y="127" />
+        <di:waypoint x="962" y="127" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

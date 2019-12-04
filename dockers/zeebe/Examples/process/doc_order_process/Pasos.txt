@@ -1,0 +1,34 @@
+***************************************************************************
+***						Desde linea de comandos							***
+***************************************************************************
+-	Desplegar el proceso
+./bin/zbctl.exe --insecure deploy order-process.bpmn
+
+-	crear instancias del proceso anterior
+./bin/zbctl.exe --insecure create instance order-process --variables '{"orderId": "1234", "orderValue":99}'
+./bin/zbctl.exe --insecure create instance order-process --variables '{"orderId": "2345", "orderValue":100}'
+
+-	crear worker que se encargue de manegar una tarea automatica del tipo indicado
+./bin/zbctl.exe --insecure create worker initiate-payment --handler "findstr .*"
+
+-   lanzar mensajes correlacionados con las instancias anteriores
+./bin/zbctl.exe --insecure publish message "payment-received" --correlationKey="1234"
+./bin/zbctl.exe --insecure publish message "payment-received" --correlationKey="2345"
+
+-	crear worker que se encargue de manegar una tarea automatica del tipo indicado
+./bin/zbctl.exe --insecure create worker ship-without-insurance --handler "findstr .*"
+
+-	crear worker que se encargue de manegar una tarea automatica del tipo indicado
+./bin/zbctl.exe --insecure create worker ship-with-insurance --handler "findstr .*"
+
+
+
+
+
+ 
+
+
+
+
+
+
