@@ -1,6 +1,0 @@
-org\camunda\tutorials\camunda_error_handling\PurchaseMaterialsDeleagate.class
-org\camunda\tutorials\camunda_error_handling\CamundaBpmProcessApplication.class
-org\camunda\tutorials\camunda_error_handling\LoggerDelegate.class
-org\camunda\tutorials\camunda_error_handling\DesignAirportDelegate.class
-org\camunda\tutorials\camunda_error_handling\IncreaseBugetDelegate.class
-org\camunda\tutorials\camunda_error_handling\SendUpdateMessageDelegate.class

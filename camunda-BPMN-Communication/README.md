@@ -32,7 +32,7 @@ mvn clean test
 
 -	curso básico
 
-    https://www.youtube.com/watch?v=sHgf_EsQzfc&list=PLJG25HlmvsOUnCziyJBWzcNh7RM5quTmv&index=1
+    https://www.youtube.com/playlist?list=PLJG25HlmvsOUnCziyJBWzcNh7RM5quTmv
 
 -	started de camunda con spring-boot, para generar un proyecto de camunda con spring-boot nuevo
 
