@@ -1,0 +1,14 @@
+<div uib-dropdown class="dropdown dropdown-time-period" >
+
+  <a uib-dropdown-toggle class="dropdown-toggle" data-ng-class="{'disabled': !adjustablePeriod}">
+    {{'PLGN_ACTIVITY_INSTANCE_PERIOD_TIME_PERIOD' | translate}} {{selectedMetricPeriod}}
+    <span id="selected"> </span>
+    <span class="caret"></span>
+  </a>
+
+  <ul uib-dropdown-menu class="dropdown-menu dropdown-menu-right" role="menu">
+    <li class="activity-instance-period" ng-repeat="metricsPeriod in metricsPeriods">
+      <a ng-click="setHistoricActivityQuery(metricsPeriod)">{{metricsPeriod.label}}</a>
+    </li>
+  </ul>
+</div>

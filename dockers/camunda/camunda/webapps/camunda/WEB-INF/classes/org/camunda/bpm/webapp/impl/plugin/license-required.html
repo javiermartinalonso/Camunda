@@ -1,0 +1,32 @@
+<!--this page is displayed if a plugin resource is requested for which no valid license key exists. -->
+
+<!-- inline styles ftw! -->
+<div class="camunda-ee-license-missing">
+
+  <div>
+
+    <div uib-alert class="alert alert-danger">
+      <p>
+        <i class="glyphicon glyphicon-warning-sign"></i>
+        <strong>License required!</strong>
+      </p>
+      <p>
+        This functionality requires a valid license key.
+      </p>
+      <p show-if-authorized
+         auth-permission="ALL"
+         auth-resource-name="authorization"
+         auth-inverse="true" >
+        Please contact your administrator to enter a license key.
+      </p>
+
+      <p show-if-authorized
+         auth-permission="ALL"
+         auth-resource-name="authorization">
+        <a href="$ADMIN_APP_BASE#/system?section=system-settings-license" target="_blank">Enter your license key now</a>
+      </p>
+
+    </div>
+  </div>
+
+</div>

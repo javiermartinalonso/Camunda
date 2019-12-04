@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0wabs8u" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
+  <bpmn:process id="Prototipo_python" name="Prototipo python" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1fywd36</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1fywd36" sourceRef="StartEvent_1" targetRef="Task_0cdgmnh" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nzv2g1" sourceRef="Task_0cdgmnh" targetRef="Task_0cd4o10" />
+    <bpmn:endEvent id="EndEvent_064jkth">
+      <bpmn:incoming>SequenceFlow_0kn0ojn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0kn0ojn" sourceRef="Task_0cd4o10" targetRef="EndEvent_064jkth" />
+    <bpmn:scriptTask id="Task_0cdgmnh" name="script in python" scriptFormat="Groovy" camunda:resultVariable="result">
+      <bpmn:incoming>SequenceFlow_1fywd36</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1nzv2g1</bpmn:outgoing>
+      <bpmn:script>def pmdCommand = 'C:/ProgramData/Anaconda2/python.exe c:/dockers/camunda/camunda/examples/PYTHON/jokeRest.py -t '
+
+def sout = new StringBuffer()
+def serr = new StringBuffer()
+
+def process = pmdCommand.execute()
+process.consumeProcessOutput(sout, serr)
+
+process.waitForProcessOutput()
+
+def result = sout.toString()
+println "sout : '" + sout.toString() + "'"
+println "serr : '" + serr.toString() + "'"
+System.out &lt;&lt; sout.toString()
+
+execution.setVariable("result", result )</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Task_0cd4o10" name="see result">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_3u3hne1" label="result" type="string" defaultValue="#{result}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1nzv2g1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0kn0ojn</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Prototipo_python">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fywd36_di" bpmnElement="SequenceFlow_1fywd36">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nzv2g1_di" bpmnElement="SequenceFlow_1nzv2g1">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_064jkth_di" bpmnElement="EndEvent_064jkth">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0kn0ojn_di" bpmnElement="SequenceFlow_0kn0ojn">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_1qzqw48_di" bpmnElement="Task_0cdgmnh">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_04r6y3z_di" bpmnElement="Task_0cd4o10">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

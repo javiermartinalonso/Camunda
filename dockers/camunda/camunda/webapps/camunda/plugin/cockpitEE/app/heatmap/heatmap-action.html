@@ -1,0 +1,11 @@
+<a
+  class="heatmaplink"
+  ng-click="toggleHeatmap()"
+  ng-disabled="isLoading"
+  uib-tooltip="{{ 'PLUGIN_DIAGRAM_HEATMAP_TOOLTIP' | translate }}"
+  tooltip-placement="bottom">
+  {{ 'PLUGIN_DIAGRAM_HEATMAP' | translate }}
+  <span ng-if="hasHeatmap() && !isLoading">{{ 'PLUGIN_DIAGRAM_HEATMAP_ON' | translate }} <input type="radio" checked="" class="toggle" ></span>
+  <span ng-if="!hasHeatmap() && !isLoading">{{ 'PLUGIN_DIAGRAM_HEATMAP_OFF' | translate }} <input type="radio" class="toggle"> </span>
+  <span ng-if="isLoading">{{ 'PLUGIN_DIAGRAM_HEATMAP_LOADING' | translate }}</span>
+</a>

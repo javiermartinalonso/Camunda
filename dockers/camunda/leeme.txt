@@ -1,0 +1,92 @@
+##########################################################
+###		 		   Camunda platform		   		       ###
+##########################################################
+https://www.youtube.com/watch?v=UtVtL2M7C50&feature=em-uploademail
+
+docker login registry.camunda.cloud
+user_from_trial_email
+password
+
+
+docker-compose -f camunda-optimize-example.yml up -d
+
+https://docs.camunda.org/get-started
+
+
+##########################################################
+###		    		Camunda developer:			       ###
+##########################################################
+https://youtu.be/gFY1UuiCVl4
+
+-	curso básico
+https://www.youtube.com/watch?v=sHgf_EsQzfc&list=PLJG25HlmvsOUnCziyJBWzcNh7RM5quTmv&index=1
+
+-	started de camunda con spring-boot, para generar un proyecto de camunda con spring-boot nuevo
+
+http://start.camunda.com/
+
+-	doc oficial de camunda para empezar
+https://docs.camunda.org/get-started/spring-boot/
+
+
+- github camunda con recursos
+
+
+
+- crear los recursos externos
+
+CLIENTE EXTERNO JAVASCRIPT
+
+	https://github.com/camunda/camunda-external-task-client-js
+	
+	npm install -s camunda-external-task-client-js
+
+	- en la ruta para instalarlo en el servidor:
+	node .\DecideOnExpansionWorker.js
+
+
+CLIENTE EXTERNO JAVA
+
+	https://github.com/camunda/camunda-external-task-client-java
+	https://docs.camunda.org/get-started/quick-start/service-task/#a-using-java
+	
+
+Rest
+
+https://www.youtube.com/watch?v=ypX90aQScOQ&list=PLJG25HlmvsOUnCziyJBWzcNh7RM5quTmv&index=4
+
+https://docs.camunda.org/manual/latest/reference/rest/
+
+- deploy process
+
+	https://docs.camunda.org/manual/latest/reference/rest/deployment/
+		/deployment/create
+		
+		
+	start instance
+	https://docs.camunda.org/manual/latest/reference/rest/process-definition/
+	Start Instance
+	POST /process-definition/{id}/start
+	POST /process-definition/key/{key}/start
+	POST /process-definition/key/{key}/tenant-id/{tenant-id}/start
+	
+
+
+##########################################################
+###		    		Camunda WEBINARS				   ###
+##########################################################
+
+
+
+https://camunda.com/learn/webinars/
+
+
+
+
+https://forum.camunda.org/t/python-integration-with-camunda/8846
+
+https://github.com/jythontools/jython/issues/83
+
+
+https://docs.camunda.org/manual/7.7/user-guide/process-engine/scripting/#script-source
+https://docs.camunda.org/manual/7.7/user-guide/process-engine/scripting/

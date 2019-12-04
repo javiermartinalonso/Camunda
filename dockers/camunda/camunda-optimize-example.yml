@@ -1,0 +1,65 @@
+version: '2'
+
+services:
+  ## Camunda BPM 7.11.4
+  camunda-bpm:
+    container_name: camunda-bpm
+    image: registry.camunda.cloud/camunda-bpm-platform-ee:7.11.4
+    ports:
+      - "8080:8080"
+    networks:
+      - optimize
+    volumes:
+      - .\camunda\webapps\camundaSimpleDemo.war:/camunda/webapps/camundaSimpleDemo.war
+      - .\camunda\webapps\camunda-BPMN-Communication.war:/camunda/webapps/camunda-BPMN-Communication.war    
+      - .\camunda\webapps\camunda-error-handling.war:/camunda/webapps/camunda-error-handling.war
+      - .\camunda\lib_python\jython-standalone-2.7.1.jar:/camunda/lib/jython-standalone-2.7.1.jar
+      - .\camunda\lib_python\jython-installer-2.7.1.jar:/camunda/lib/jython-installer-2.7.1.jar
+      - .\camunda\examples\PYTHON\joke.py:/camunda/lib/joke.py      
+      - .\camunda\resources:/camunda/resources
+      - .\camunda\examples\PYTHON\joke.py:/camunda/scripts/python/joke.py
+      #- .\camunda\webapps:/camunda/webapps
+      #- .\camunda\conf\tomcat-users.xml:/conf/tomcat-users.xml
+      #- .\camunda\conf\server.xml:/camunda/conf/server.xml
+      #- .\camunda\conf\context.xml:/camunda/conf/context.xml
+      #los siguientes no sirven de esta manera se sobreescriben al desplegarse de nuevo
+      #- .\camunda\conf\context.xml:/webapps/host-manager/META-INF/context.xml
+      #- .\camunda\conf\context.xml:/webapps/manager/META-INF/context.xml   
+      
+
+    mem_limit: 768m
+    restart: always
+  ## Camunda Optimize 2.6.0
+  camunda-optimize:
+    image: registry.camunda.cloud/optimize:2.6.0
+    mem_limit: 1g
+    environment:
+      - OPTIMIZE_CAMUNDABPM_REST_URL=http://camunda-bpm:8080/engine-rest
+      - OPTIMIZE_ELASTICSEARCH_HOST=optimize-elasticsearch
+    ports:
+      - "8090:8090"
+    networks:
+      - optimize
+    depends_on:
+      - optimize-elasticsearch
+      - camunda-bpm
+    restart: always
+  ## ElasticSearch 6.8.3
+  optimize-elasticsearch:
+    container_name: optimize-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.3
+    mem_limit: 2g
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+      - elasticsearch-logs:/usr/share/elasticsearch/logs
+    networks:
+      - optimize
+    restart: always
+volumes:
+  elasticsearch-data:
+  elasticsearch-logs:
+
+networks:
+  optimize:

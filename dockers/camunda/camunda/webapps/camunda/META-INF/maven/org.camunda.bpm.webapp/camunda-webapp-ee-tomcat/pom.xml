@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.camunda.bpm.webapp</groupId>
+    <artifactId>camunda-webapp-ee-root</artifactId>
+    <version>7.11.4-ee</version>
+	<relativePath>../</relativePath>
+  </parent>
+  
+  <artifactId>camunda-webapp-ee-tomcat</artifactId>
+  <packaging>war</packaging>
+  <name>camunda BPM EE - webapp - Tomcat</name>
+  
+  <dependencies>
+  
+    <dependency>
+      <groupId>org.camunda.bpm.webapp</groupId>
+      <artifactId>camunda-webapp-ee-plugins</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>camunda-webapp-ee</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <repositories>
+    <repository>
+      <id>camunda-bpm-nexus</id>
+      <name>camunda-bpm-nexus</name>
+      <url>https://app.camunda.com/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
+
+</project>
