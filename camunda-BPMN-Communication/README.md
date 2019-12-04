@@ -1,6 +1,6 @@
 #References
 
-Este proyecto se centra en los eventos de mensaje en BPMN
+Este proyecto se centra en los eventos de mensaje en BPMN. Está pensado para compilarse como war y desplegarse en un servidor de camunda. En el war se incluyen los diagramas y las calases java que implementan las tareas.
 
 This video is view in 
 [7 Tutorial: Process Communication](https://www.youtube.com/watch?v=8SYEc3dHnM4 "7 Tutorial: Process Communication")

@@ -1,6 +1,7 @@
 #References
 
-Este proyecto se centra en el manejo de errores en BPMN
+Este proyecto se centra en el manejo de errores en BPMN.
+Está pensado para compilarse como war y desplegarse en un servidor de camunda. En el war se incluyen los diagramas y las calases java que implementan las tareas.
 
 This video is view in 
 [8 Tutorial Error Handling](https://www.youtube.com/watch?v=IR3eUDVpc_w&list=PLJG25HlmvsOUnCziyJBWzcNh7RM5quTmv&index=8 "8 Tutorial Error Handling")

@@ -1,4 +1,0 @@
-server.port: 7080
-camunda.bpm.admin-user:
-  id: demo
-  password: demo
