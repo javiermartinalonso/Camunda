@@ -77,7 +77,7 @@
   <bpmn:message id="Message_0oepaxs" name="HasNoIdea" />
   <bpmn:message id="Message_06sjjyx" name="QuestionHasBeenEdited" />
   <bpmn:signal id="Signal_1a3rkld" name="ImportantWork" />
-  <bpmn:message id="Message_1igqrtv" />
+  <bpmn:message id="Message_1igqrtv" name="AskSupport" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="manage_forum">
       <bpmndi:BPMNShape id="StartEvent_0gpn2zg_di" bpmnElement="StartEvent_1">
