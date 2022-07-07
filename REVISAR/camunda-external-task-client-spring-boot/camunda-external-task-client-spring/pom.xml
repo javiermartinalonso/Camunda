@@ -10,7 +10,7 @@
   <artifactId>camunda-external-task-client-spring</artifactId>
 
   <properties>
-    <spring.version>5.1.6.RELEASE</spring.version>
+    <spring.version>5.2.21.RELEASE</spring.version>
     <lombok.version>1.16.2</lombok.version>
     <camunda-external-task-client.version>1.1.1</camunda-external-task-client.version>
   </properties>
